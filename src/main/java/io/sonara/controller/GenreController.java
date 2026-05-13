@@ -1,7 +1,9 @@
 package io.sonara.controller;
 
+import io.sonara.dto.GenreRequestDTO;
 import io.sonara.entity.Genre;
 import io.sonara.service.GenreService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +17,8 @@ public class GenreController {
     private GenreService genreService;
 
     @PostMapping
-    public Genre save(@RequestBody Genre genre) {
-        return genreService.save(genre);
+    public Genre save(@RequestBody @Valid GenreRequestDTO dto) {
+        return genreService.save(dto);
     }
 
     @GetMapping

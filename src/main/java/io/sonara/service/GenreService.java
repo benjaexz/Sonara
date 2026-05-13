@@ -1,5 +1,6 @@
 package io.sonara.service;
 
+import io.sonara.dto.GenreRequestDTO;
 import io.sonara.entity.Genre;
 import io.sonara.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,12 @@ public class GenreService {
     @Autowired
     private GenreRepository genreRepository;
 
-    public Genre save(Genre genre) {
+    public Genre save(GenreRequestDTO dto) {
+
+        Genre genre = new Genre();
+
+        genre.setName(dto.getName());
+
         return genreRepository.save(genre);
     }
 
