@@ -15,6 +15,10 @@ public class GenreService {
     private GenreRepository genreRepository;
 
     public Genre save(GenreRequestDTO dto) {
+        genreRepository.findByName(dto.getName())
+                .ifPresent(existingGenre -> {
+                    throw new RuntimeException("Genre already exists");
+                });
 
         Genre genre = new Genre();
 
@@ -23,7 +27,4 @@ public class GenreService {
         return genreRepository.save(genre);
     }
 
-    public List<Genre> findAll() {
-        return genreRepository.findAll();
-    }
 }
