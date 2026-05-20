@@ -1,5 +1,3 @@
-- Respostas de erro padronizadas Sonara
-
 Sonara é um projeto de backend para um catálogo de música e sistema de comportamento do usuário, inspirado em plataformas como Apple Music e Spotify.
 
 O objetivo é construir um sistema backend real usando Java, Spring Boot, PostgreSQL, APIs REST, arquitetura em câmeras, validação, tratamento de exceções e modelagem de domínio relacional.
@@ -50,16 +48,16 @@ O objetivo é construir um sistema backend real usando Java, Spring Boot, Postgr
 
 # Arquitetura
 
-The project follows a layered backend architecture:
+O projeto segue uma arquitetura de backend em camadas:
 
-```txt
-Client
+```texto
+Cliente
   ↓
-Controller
+Controlador
   ↓
-Service
+Serviço
   ↓
-Repository
+Repositório
   ↓
 PostgreSQL
 ```
@@ -153,4 +151,4 @@ Sonara não é apenas um projeto CRUD.
 - validação de dados
 - tratamento de erros
 - estrutura de backend escalar
-- evolução progressiva do sistema````
+- evolução progressiva do sistema
