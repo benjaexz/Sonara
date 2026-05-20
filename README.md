@@ -1,55 +1,54 @@
-````md
-# Sonara
+- Respostas de erro padronizadas Sonara
 
-Sonara is a backend project for a music catalog and user behavior system, inspired by platforms like Apple Music and Spotify.
+Sonara é um projeto de backend para um catálogo de música e sistema de comportamento do usuário, inspirado em plataformas como Apple Music e Spotify.
 
-The goal is to build a real backend system using Java, Spring Boot, PostgreSQL, REST APIs, layered architecture, validation, exception handling and relational domain modeling.
+O objetivo é construir um sistema backend real usando Java, Spring Boot, PostgreSQL, APIs REST, arquitetura em câmeras, validação, tratamento de exceções e modelagem de domínio relacional.
 
 ---
 
-# Tech Stack
+# Pilha de tecnologia
 
 - Java 21
-- Spring Boot
-- Spring Data JPA
-- Hibernate
+- Bota de mola
+- Dados de primavera JPA
+- Hibernar
 - PostgreSQL
-- Maven
-- Bean Validation
-- REST API
+- Especialista
+- Validação de Bean
+- API REST
 - UUID
 
 ---
 
-# Current Features
+# Características Atuais
 
-## Genre Module
-- Create genres
-- List genres
-- Duplicate protection
-- Validation
+## Módulo de gênero
+- Criar gêneros
+- Listar gêneros
+- Proteção duplicada
+- Validação
 
-## Artist Module
-- Create artists
-- List artists
-- Duplicate protection
-- Validation
+## Módulo Artista
+- Criar artistas
+- Listar artistas
+- Proteção duplicada
+- Validação
 
-## Album Module
-- Create albums
-- List albums
-- Relationship with Artist
-- Validation
+## Módulo Álbum
+- Criar álbuns
+- Listar álbuns
+- Relacionamento com Artista
+- Validação
 
-## Global Exception Handling
-- Standardized error responses
-- Duplicate resource handling
-- Resource not found handling
-- Validation error handling
+## Tratamento de exceções globais
+- Respostas de erro padronizadas
+- Manipulação duplicada de recursos
+- Tratamento de recursos não encontrados
+- Tratamento de erros de validação
 
 ---
 
-# Architecture
+# Arquitetura
 
 The project follows a layered backend architecture:
 
@@ -80,7 +79,7 @@ exception
 
 # Domain Model - Current Stage
 
-```txt
+ Validaçãotxt
 Artist
   └── Album
 
@@ -90,69 +89,68 @@ Genre
 Next domain step:
 
 ```txt
-Artist
-  └── Album
-        └── Track
+Artista
+ └── Álbum
+ └── Trilha
 
-Genre
-  └── Track
+Gênero
+ └── Trilha
 ```
 
 ---
 
-# API Endpoints
+# Pontos finais da API
 
-## Genres
+## Gêneros
 
 ```http
-GET /genres
-POST /genres
+OBTER /gêneros
+POSTAR /gêneros
 ```
 
-## Artists
+## Artistas
 
 ```http
-GET /artists
-POST /artists
+OBTER /artistas
+POSTAR/artistas
 ```
 
-## Albums
+## Pãezinhos
 
 ```http
-GET /albums
-POST /albums
+OBTER /álbuns
+POSTAR /álbuns
 ```
 
 ---
 
-# Roadmap
+# Roteiro
 
-- [x] Genre module
-- [x] Artist module
-- [x] Album module
-- [x] Global exception handler
-- [ ] Track module
-- [ ] Response DTOs
-- [ ] Swagger / OpenAPI
-- [ ] Tests
-- [ ] JWT authentication
-- [ ] Pagination and filters
+- [x] Módulo de gênero
+- [x] Módulo artista
+- [x] Módulo de Álbum
+- [x] Manipulador de exceções globais
+- [ ] Módulo de trilha
+- [ ] DTOs de resposta
+- [ ] Arrogância / OpenAPI
+- [ ] Testículos
+- [ ] Autenticação JWT
+- [ ] Paginação e filtros
 - [ ] Docker
-- [ ] Deploy
+- [ ] Implantar
 
 ---
 
-# Project Goal
+# Objetivo do projeto
 
-Sonara is not just a CRUD project.
+Sonara não é apenas um projeto CRUD.
 
-It is a backend engineering project focused on:
+É um projeto de engenharia de backend focado em:
 
-- relational modeling
-- API design
-- layered architecture
-- data validation
-- error handling
-- scalable backend structure
-- progressive system evolution
-````
+- modelagem relacional
+- Design de API
+- arquitetura em camadas
+- validação de dados
+- tratamento de erros
+- estrutura de backend escalar
+- evolução progressiva do sistema````
