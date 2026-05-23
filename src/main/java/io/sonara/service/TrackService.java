@@ -13,6 +13,7 @@ import io.sonara.repository.TrackRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class TrackService {
@@ -66,5 +67,47 @@ public class TrackService {
 
     public List<Track> getAllTracks() {
         return trackRepository.findAll();
+    }
+
+    public Track getTrackById(UUID id) {
+        return trackRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Track not found"));
+    }
+
+    public Track updateTrack(UUID id, TrackRequestDTO dto) {
+
+        Track track = getTrackById(id);
+
+        Artist artist = artistRepository.findById(dto.getArtistId())
+                .orElseThrow(() -> new ResourceNotFoundException("Artist not found"));
+
+        Album album = null;
+
+        if (dto.getAlbumId() != null) {
+            album = albumRepository.findById(dto.getAlbumId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Album not found"));
+        }
+
+        Genre genre = null;
+
+        if (dto.getGenreId() != null) {
+            genre = genreRepository.findById(dto.getGenreId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Genre not found"));
+        }
+
+        track.setTitle(dto.getTitle());
+        track.setDurationSeconds(dto.getDurationSeconds());
+        track.setArtist(artist);
+        track.setAlbum(album);
+        track.setGenre(genre);
+
+        return trackRepository.save(track);
+    }
+
+    public void deleteTrack(UUID id) {
+
+        Track track = getTrackById(id);
+
+        trackRepository.delete(track);
     }
 }

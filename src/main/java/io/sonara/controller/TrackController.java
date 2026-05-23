@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/tracks")
@@ -32,5 +33,29 @@ public class TrackController {
     public ResponseEntity<List<Track>> getAllTracks() {
 
         return ResponseEntity.ok(trackService.getAllTracks());
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Track> getTrackById(@PathVariable UUID id) {
+        Track track = trackService.getTrackById(id);
+
+        return ResponseEntity.ok(track);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Track> updateTrack(
+            @PathVariable UUID id,
+            @Valid @RequestBody TrackRequestDTO dto
+    ) {
+        Track updatedTrack = trackService.updateTrack(id, dto);
+
+        return ResponseEntity.ok(updatedTrack);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTrack(@PathVariable UUID id) {
+
+        trackService.deleteTrack(id);
+
+        return ResponseEntity.noContent().build();
     }
 }
