@@ -1,7 +1,7 @@
 package io.sonara.controller;
 
 import io.sonara.dto.TrackRequestDTO;
-import io.sonara.entity.Track;
+import io.sonara.dto.TrackResponseDTO;
 import io.sonara.service.TrackService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -22,31 +22,33 @@ public class TrackController {
     }
 
     @PostMapping
-    public ResponseEntity<Track> createTrack(@Valid @RequestBody TrackRequestDTO dto) {
+    public ResponseEntity<TrackResponseDTO> createTrack(@Valid @RequestBody TrackRequestDTO dto) {
 
-        Track createdTrack = trackService.createTrack(dto);
+        TrackResponseDTO createdTrack = trackService.createTrack(dto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTrack);
     }
 
-    @GetMapping 
-    public ResponseEntity<List<Track>> getAllTracks() {
+    @GetMapping
+    public ResponseEntity<List<TrackResponseDTO>> getAllTracks() {
 
         return ResponseEntity.ok(trackService.getAllTracks());
     }
+
     @GetMapping("/{id}")
-    public ResponseEntity<Track> getTrackById(@PathVariable UUID id) {
-        Track track = trackService.getTrackById(id);
+    public ResponseEntity<TrackResponseDTO> getTrackById(@PathVariable UUID id) {
+
+        TrackResponseDTO track = trackService.getTrackById(id);
 
         return ResponseEntity.ok(track);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Track> updateTrack(
+    public ResponseEntity<TrackResponseDTO> updateTrack(
             @PathVariable UUID id,
             @Valid @RequestBody TrackRequestDTO dto
     ) {
-        Track updatedTrack = trackService.updateTrack(id, dto);
+        TrackResponseDTO updatedTrack = trackService.updateTrack(id, dto);
 
         return ResponseEntity.ok(updatedTrack);
     }

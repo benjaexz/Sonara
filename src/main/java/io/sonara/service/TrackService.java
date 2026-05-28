@@ -1,6 +1,10 @@
 package io.sonara.service;
 
+import io.sonara.dto.AlbumResponseDTO;
+import io.sonara.dto.ArtistResponseDTO;
+import io.sonara.dto.GenreResponseDTO;
 import io.sonara.dto.TrackRequestDTO;
+import io.sonara.dto.TrackResponseDTO;
 import io.sonara.entity.Album;
 import io.sonara.entity.Artist;
 import io.sonara.entity.Genre;
@@ -35,7 +39,7 @@ public class TrackService {
         this.genreRepository = genreRepository;
     }
 
-    public Track createTrack(TrackRequestDTO dto) {
+    public TrackResponseDTO createTrack(TrackRequestDTO dto) {
 
         Artist artist = artistRepository.findById(dto.getArtistId())
                 .orElseThrow(() -> new ResourceNotFoundException("Artist not found"));
@@ -62,21 +66,27 @@ public class TrackService {
                 genre
         );
 
-        return trackRepository.save(track);
+        Track savedTrack = trackRepository.save(track);
+
+        return toResponseDTO(savedTrack);
     }
 
-    public List<Track> getAllTracks() {
-        return trackRepository.findAll();
+    public List<TrackResponseDTO> getAllTracks() {
+        return trackRepository.findAll()
+                .stream()
+                .map(this::toResponseDTO)
+                .toList();
     }
 
-    public Track getTrackById(UUID id) {
-        return trackRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Track not found"));
+    public TrackResponseDTO getTrackById(UUID id) {
+        Track track = findTrackEntityById(id);
+
+        return toResponseDTO(track);
     }
 
-    public Track updateTrack(UUID id, TrackRequestDTO dto) {
+    public TrackResponseDTO updateTrack(UUID id, TrackRequestDTO dto) {
 
-        Track track = getTrackById(id);
+        Track track = findTrackEntityById(id);
 
         Artist artist = artistRepository.findById(dto.getArtistId())
                 .orElseThrow(() -> new ResourceNotFoundException("Artist not found"));
@@ -101,13 +111,66 @@ public class TrackService {
         track.setAlbum(album);
         track.setGenre(genre);
 
-        return trackRepository.save(track);
+        Track updatedTrack = trackRepository.save(track);
+
+        return toResponseDTO(updatedTrack);
     }
 
     public void deleteTrack(UUID id) {
 
-        Track track = getTrackById(id);
+        Track track = findTrackEntityById(id);
 
         trackRepository.delete(track);
+    }
+
+    private Track findTrackEntityById(UUID id) {
+        return trackRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Track not found"));
+    }
+
+    private TrackResponseDTO toResponseDTO(Track track) {
+        return new TrackResponseDTO(
+                track.getId(),
+                track.getTitle(),
+                track.getDurationSeconds(),
+                toArtistResponseDTO(track.getArtist()),
+                toAlbumResponseDTO(track.getAlbum()),
+                toGenreResponseDTO(track.getGenre())
+        );
+    }
+
+    private ArtistResponseDTO toArtistResponseDTO(Artist artist) {
+        if (artist == null) {
+            return null;
+        }
+
+        return new ArtistResponseDTO(
+                artist.getId(),
+                artist.getName()
+        );
+    }
+
+    private AlbumResponseDTO toAlbumResponseDTO(Album album) {
+        if (album == null) {
+            return null;
+        }
+
+        return new AlbumResponseDTO(
+                album.getId(),
+                album.getTitle(),
+                album.getReleaseYear(),
+                toArtistResponseDTO(album.getArtist())
+        );
+    }
+
+    private GenreResponseDTO toGenreResponseDTO(Genre genre) {
+        if (genre == null) {
+            return null;
+        }
+
+        return new GenreResponseDTO(
+                genre.getId(),
+                genre.getName()
+        );
     }
 }
