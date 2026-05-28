@@ -1,28 +1,40 @@
 package io.sonara.controller;
 
 import io.sonara.dto.ArtistRequestDTO;
-import io.sonara.entity.Artist;
+import io.sonara.dto.ArtistResponseDTO;
 import io.sonara.service.ArtistService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/artists")
 public class ArtistController {
 
-    @Autowired
-    private ArtistService artistService;
+    private final ArtistService artistService;
+
+    public ArtistController(ArtistService artistService) {
+        this.artistService = artistService;
+    }
 
     @PostMapping
-    public Artist save(@RequestBody @Valid ArtistRequestDTO dto) {
-        return artistService.save(dto);
+    public ResponseEntity<ArtistResponseDTO> save(@RequestBody @Valid ArtistRequestDTO dto) {
+        ArtistResponseDTO createdArtist = artistService.save(dto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdArtist);
     }
 
     @GetMapping
-    public List<Artist> findAll() {
-        return artistService.findAll();
+    public ResponseEntity<List<ArtistResponseDTO>> findAll() {
+        return ResponseEntity.ok(artistService.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ArtistResponseDTO> findById(@PathVariable UUID id) {
+        return ResponseEntity.ok(artistService.findById(id));
     }
 }
