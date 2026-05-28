@@ -1,27 +1,34 @@
 package io.sonara.service;
 
 import io.sonara.dto.AlbumRequestDTO;
+import io.sonara.dto.AlbumResponseDTO;
+import io.sonara.dto.ArtistResponseDTO;
 import io.sonara.entity.Album;
 import io.sonara.entity.Artist;
 import io.sonara.exception.DuplicateResourceException;
 import io.sonara.exception.ResourceNotFoundException;
 import io.sonara.repository.AlbumRepository;
 import io.sonara.repository.ArtistRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AlbumService {
 
-    @Autowired
-    private AlbumRepository albumRepository;
+    private final AlbumRepository albumRepository;
+    private final ArtistRepository artistRepository;
 
-    @Autowired
-    private ArtistRepository artistRepository;
+    public AlbumService(
+            AlbumRepository albumRepository,
+            ArtistRepository artistRepository
+    ) {
+        this.albumRepository = albumRepository;
+        this.artistRepository = artistRepository;
+    }
 
-    public Album save(AlbumRequestDTO dto) {
+    public AlbumResponseDTO save(AlbumRequestDTO dto) {
 
         albumRepository.findByTitle(dto.title())
                 .ifPresent(existingAlbum -> {
@@ -38,10 +45,38 @@ public class AlbumService {
         album.setReleaseYear(dto.releaseYear());
         album.setArtist(artist);
 
-        return albumRepository.save(album);
+        Album savedAlbum = albumRepository.save(album);
+
+        return toResponseDTO(savedAlbum);
     }
 
-    public List<Album> findAll() {
-        return albumRepository.findAll();
+    public List<AlbumResponseDTO> findAll() {
+        return albumRepository.findAll()
+                .stream()
+                .map(this::toResponseDTO)
+                .toList();
+    }
+
+    public AlbumResponseDTO findById(UUID id) {
+        Album album = albumRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Album not found"));
+
+        return toResponseDTO(album);
+    }
+
+    private AlbumResponseDTO toResponseDTO(Album album) {
+        Artist artist = album.getArtist();
+
+        ArtistResponseDTO artistResponseDTO = new ArtistResponseDTO(
+                artist.getId(),
+                artist.getName()
+        );
+
+        return new AlbumResponseDTO(
+                album.getId(),
+                album.getTitle(),
+                album.getReleaseYear(),
+                artistResponseDTO
+        );
     }
 }

@@ -1,28 +1,40 @@
 package io.sonara.controller;
 
 import io.sonara.dto.AlbumRequestDTO;
-import io.sonara.entity.Album;
+import io.sonara.dto.AlbumResponseDTO;
 import io.sonara.service.AlbumService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/albums")
 public class AlbumController {
 
-    @Autowired
-    private AlbumService albumService;
+    private final AlbumService albumService;
+
+    public AlbumController(AlbumService albumService) {
+        this.albumService = albumService;
+    }
 
     @PostMapping
-    public Album save(@RequestBody @Valid AlbumRequestDTO dto) {
-        return albumService.save(dto);
+    public ResponseEntity<AlbumResponseDTO> save(@RequestBody @Valid AlbumRequestDTO dto) {
+        AlbumResponseDTO createdAlbum = albumService.save(dto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdAlbum);
     }
 
     @GetMapping
-    public List<Album> findAll() {
-        return albumService.findAll();
+    public ResponseEntity<List<AlbumResponseDTO>> findAll() {
+        return ResponseEntity.ok(albumService.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AlbumResponseDTO> findById(@PathVariable UUID id) {
+        return ResponseEntity.ok(albumService.findById(id));
     }
 }
