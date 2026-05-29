@@ -37,4 +37,19 @@ public class GenreController {
     public ResponseEntity<GenreResponseDTO> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(genreService.findById(id));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<GenreResponseDTO> update(
+            @PathVariable UUID id,
+            @RequestBody @Valid GenreRequestDTO dto
+    ) {
+        return ResponseEntity.ok(genreService.update(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        genreService.delete(id);
+
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -48,6 +48,31 @@ public class ArtistService {
         return toResponseDTO(artist);
     }
 
+    public ArtistResponseDTO update(UUID id, ArtistRequestDTO dto) {
+        Artist artist = artistRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Artist not found"));
+
+        artistRepository.findByName(dto.name())
+                .ifPresent(existingArtist -> {
+                    if (!existingArtist.getId().equals(id)) {
+                        throw new DuplicateResourceException("Artist already exists");
+                    }
+                });
+
+        artist.setName(dto.name());
+
+        Artist updatedArtist = artistRepository.save(artist);
+
+        return toResponseDTO(updatedArtist);
+    }
+
+    public void delete(UUID id) {
+        Artist artist = artistRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Artist not found"));
+
+        artistRepository.delete(artist);
+    }
+
     private ArtistResponseDTO toResponseDTO(Artist artist) {
         return new ArtistResponseDTO(
                 artist.getId(),

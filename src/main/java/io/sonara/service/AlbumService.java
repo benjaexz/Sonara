@@ -64,6 +64,36 @@ public class AlbumService {
         return toResponseDTO(album);
     }
 
+    public AlbumResponseDTO update(UUID id, AlbumRequestDTO dto) {
+        Album album = albumRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Album not found"));
+
+        albumRepository.findByTitle(dto.title())
+                .ifPresent(existingAlbum -> {
+                    if (!existingAlbum.getId().equals(id)) {
+                        throw new DuplicateResourceException("Album already exists");
+                    }
+                });
+
+        Artist artist = artistRepository.findById(dto.artistId())
+                .orElseThrow(() -> new ResourceNotFoundException("Artist not found"));
+
+        album.setTitle(dto.title());
+        album.setReleaseYear(dto.releaseYear());
+        album.setArtist(artist);
+
+        Album updatedAlbum = albumRepository.save(album);
+
+        return toResponseDTO(updatedAlbum);
+    }
+
+    public void delete(UUID id) {
+        Album album = albumRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Album not found"));
+
+        albumRepository.delete(album);
+    }
+
     private AlbumResponseDTO toResponseDTO(Album album) {
         Artist artist = album.getArtist();
 

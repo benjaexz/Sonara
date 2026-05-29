@@ -37,4 +37,19 @@ public class AlbumController {
     public ResponseEntity<AlbumResponseDTO> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(albumService.findById(id));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AlbumResponseDTO> update(
+            @PathVariable UUID id,
+            @RequestBody @Valid AlbumRequestDTO dto
+    ) {
+        return ResponseEntity.ok(albumService.update(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        albumService.delete(id);
+
+        return ResponseEntity.noContent().build();
+    }
 }

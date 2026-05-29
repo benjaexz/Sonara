@@ -47,6 +47,31 @@ public class GenreService {
 
         return toResponseDTO(genre);
     }
+    public GenreResponseDTO update(UUID id, GenreRequestDTO dto) {
+        Genre genre = genreRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Genre not found"));
+
+        genreRepository.findByName(dto.getName())
+                .ifPresent(existingGenre -> {
+                    if (!existingGenre.getId().equals(id)) {
+                        throw new DuplicateResourceException("Genre already exists");
+                    }
+                });
+
+        genre.setName(dto.getName());
+
+        Genre updatedGenre = genreRepository.save(genre);
+
+        return toResponseDTO(updatedGenre);
+    }
+
+    public void delete(UUID id) {
+        Genre genre = genreRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Genre not found"));
+
+        genreRepository.delete(genre);
+    }
+
 
     private GenreResponseDTO toResponseDTO(Genre genre) {
         return new GenreResponseDTO(

@@ -37,4 +37,19 @@ public class ArtistController {
     public ResponseEntity<ArtistResponseDTO> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(artistService.findById(id));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ArtistResponseDTO> update(
+            @PathVariable UUID id,
+            @RequestBody @Valid ArtistRequestDTO dto
+    ) {
+        return ResponseEntity.ok(artistService.update(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        artistService.delete(id);
+
+        return ResponseEntity.noContent().build();
+    }
 }
