@@ -128,7 +128,7 @@ public class TrackService {
                 .orElseThrow(() -> new ResourceNotFoundException("Track not found"));
     }
 
-    private TrackResponseDTO toResponseDTO(Track track) {
+    public TrackResponseDTO toResponseDTO(Track track) {
         return new TrackResponseDTO(
                 track.getId(),
                 track.getTitle(),
