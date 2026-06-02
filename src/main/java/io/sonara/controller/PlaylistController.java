@@ -61,4 +61,19 @@ public class PlaylistController {
                 user.getEmail()
         );
     }
+
+    @DeleteMapping("/{playlistId}/tracks/{trackId}")
+    public PlaylistResponseDTO removeTrackFromPlaylist(
+            @PathVariable UUID playlistId,
+            @PathVariable UUID trackId,
+            Authentication authentication
+    ) {
+        User user = (User) authentication.getPrincipal();
+
+        return playlistService.removeTrackFromPlaylist(
+                playlistId,
+                trackId,
+                user.getEmail()
+        );
+    }
 }

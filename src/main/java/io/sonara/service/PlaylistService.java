@@ -1,5 +1,6 @@
 package io.sonara.service;
 
+import org.springframework.transaction.annotation.Transactional;
 import io.sonara.dto.PlaylistRequestDTO;
 import io.sonara.dto.PlaylistResponseDTO;
 import io.sonara.dto.PlaylistTrackResponseDTO;
@@ -105,6 +106,33 @@ public class PlaylistService {
         );
 
         playlistTrackRepository.save(playlistTrack);
+
+        return toResponseDTO(playlist);
+    }
+    @Transactional
+    public PlaylistResponseDTO removeTrackFromPlaylist(
+            UUID playlistId,
+            UUID trackId,
+            String email
+    ) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        Playlist playlist = playlistRepository.findById(playlistId)
+                .orElseThrow(() -> new ResourceNotFoundException("Playlist not found"));
+
+        if (!playlist.getUser().getId().equals(user.getId())) {
+            throw new ResourceNotFoundException("Playlist not found");
+        }
+
+        Track track = trackRepository.findById(trackId)
+                .orElseThrow(() -> new ResourceNotFoundException("Track not found"));
+
+        if (!playlistTrackRepository.existsByPlaylistAndTrack(playlist, track)) {
+            throw new ResourceNotFoundException("Track not found in playlist");
+        }
+
+        playlistTrackRepository.deleteByPlaylistAndTrack(playlist, track);
 
         return toResponseDTO(playlist);
     }

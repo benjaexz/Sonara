@@ -13,4 +13,6 @@ public interface PlaylistTrackRepository extends JpaRepository<PlaylistTrack, UU
     List<PlaylistTrack> findByPlaylistOrderByPositionAsc(Playlist playlist);
 
     boolean existsByPlaylistAndTrack(Playlist playlist, Track track);
+
+    void deleteByPlaylistAndTrack(Playlist playlist, Track track);
 }
