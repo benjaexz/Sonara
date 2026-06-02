@@ -76,4 +76,18 @@ public class PlaylistController {
                 user.getEmail()
         );
     }
+
+    @DeleteMapping("/{playlistId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletePlaylist(
+            @PathVariable UUID playlistId,
+            Authentication authentication
+    ) {
+        User user = (User) authentication.getPrincipal();
+
+        playlistService.deletePlaylist(
+                playlistId,
+                user.getEmail()
+        );
+    }
 }

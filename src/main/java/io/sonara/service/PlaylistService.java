@@ -1,6 +1,5 @@
 package io.sonara.service;
 
-import org.springframework.transaction.annotation.Transactional;
 import io.sonara.dto.PlaylistRequestDTO;
 import io.sonara.dto.PlaylistResponseDTO;
 import io.sonara.dto.PlaylistTrackResponseDTO;
@@ -15,6 +14,7 @@ import io.sonara.repository.PlaylistTrackRepository;
 import io.sonara.repository.TrackRepository;
 import io.sonara.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -109,6 +109,7 @@ public class PlaylistService {
 
         return toResponseDTO(playlist);
     }
+
     @Transactional
     public PlaylistResponseDTO removeTrackFromPlaylist(
             UUID playlistId,
@@ -135,6 +136,24 @@ public class PlaylistService {
         playlistTrackRepository.deleteByPlaylistAndTrack(playlist, track);
 
         return toResponseDTO(playlist);
+    }
+
+    @Transactional
+    public void deletePlaylist(
+            UUID playlistId,
+            String email
+    ) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        Playlist playlist = playlistRepository.findById(playlistId)
+                .orElseThrow(() -> new ResourceNotFoundException("Playlist not found"));
+
+        if (!playlist.getUser().getId().equals(user.getId())) {
+            throw new ResourceNotFoundException("Playlist not found");
+        }
+
+        playlistRepository.deleteByIdAndUser(playlistId, user);
     }
 
     private PlaylistResponseDTO toResponseDTO(Playlist playlist) {
