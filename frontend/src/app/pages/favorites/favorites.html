@@ -1,0 +1,86 @@
+<header class="view-header">
+    <div class="header-content">
+        <div class="header-badge">
+            <svg viewBox="0 0 24 24" width="36" height="36" fill="currentColor">
+                <path
+                    d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            </svg>
+        </div>
+        <div>
+            <span class="playlist-type">Coleção</span>
+            <h1 class="page-title">Músicas Curtidas</h1>
+            <p class="page-subtitle">{{ favorites.length }} faixa{{ favorites.length === 1 ? '' : 's' }} salva{{
+                favorites.length === 1 ? '' : 's' }}</p>
+        </div>
+    </div>
+</header>
+
+@if (errorMessage) {
+<div class="banner-error">
+    {{ errorMessage }}
+</div>
+}
+
+@if (favorites.length === 0 && !errorMessage) {
+<div class="empty-state">
+    <div class="empty-icon-wrap">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path
+                d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z">
+            </path>
+        </svg>
+    </div>
+    <h3>Nenhuma música curtida ainda</h3>
+    <p>Clique no coração em qualquer música para salvá-la nesta lista.</p>
+</div>
+}
+
+@if (favorites.length > 0) {
+<div class="table-container">
+    <!-- Cabeçalho -->
+    <div class="table-header">
+        <span class="col col-index">#</span>
+        <span class="col col-title">Título</span>
+        <span class="col col-album">Álbum</span>
+        <span class="col col-time">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+        </span>
+    </div>
+
+    <!-- Lista de faixas -->
+    <div class="table-body">
+        @for (fav of favorites; track fav.id; let idx = $index) {
+        <div class="table-row">
+            <div class="col col-index">
+                <span class="index-num">{{ idx + 1 }}</span>
+                <span class="play-icon">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                    </svg>
+                </span>
+            </div>
+
+            <div class="col col-title">
+                <div class="track-meta">
+                    <span class="track-name">{{ fav.track?.title }}</span>
+                    <span class="track-artist">{{ fav.track?.artist?.name || 'Artista Desconhecido' }}</span>
+                </div>
+            </div>
+
+            <div class="col col-album">
+                <span class="album-name">{{ fav.track?.album?.title || '-' }}</span>
+            </div>
+
+            <div class="col col-time">
+                <span class="duration-text">{{ formatDuration(fav.track?.durationSeconds) }}</span>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+}

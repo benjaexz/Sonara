@@ -1,0 +1,70 @@
+<header class="view-header">
+    <h1 class="page-title">Histórico de Reprodução</h1>
+    <p class="page-subtitle">Faixas ouvidas recentemente na sua conta.</p>
+</header>
+
+@if (errorMessage) {
+<div class="banner-error">
+    {{ errorMessage }}
+</div>
+}
+
+@if (history.length === 0 && !errorMessage) {
+<div class="empty-state">
+    <div class="empty-icon-wrap">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+    </div>
+    <h3>Nenhuma música no histórico ainda</h3>
+    <p>As músicas que você reproduzir aparecerão listadas aqui em ordem cronológica.</p>
+</div>
+}
+
+@if (history.length > 0) {
+<div class="table-container">
+    <!-- Cabeçalho da Tabela Estilo Spotify -->
+    <div class="table-header">
+        <span class="col col-index">#</span>
+        <span class="col col-title">Título</span>
+        <span class="col col-time">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+        </span>
+    </div>
+
+    <!-- Linhas de Músicas -->
+    <div class="table-body">
+        @for (item of history; track item.id || $index; let idx = $index) {
+        <div class="table-row">
+            <div class="col col-index">
+                <span class="index-num">{{ idx + 1 }}</span>
+                <span class="play-icon">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                    </svg>
+                </span>
+            </div>
+
+            <div class="col col-title">
+                <div class="track-meta">
+                    <span class="track-title">{{ item.track?.title }}</span>
+                    <span class="track-artist">{{ item.track?.artist || 'Artista Desconhecido' }}</span>
+                </div>
+            </div>
+
+            <div class="col col-time">
+                <span class="time-stamp">
+                    {{ item.listenedAt | date:'dd/MM/yyyy • HH:mm' }}
+                </span>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+}

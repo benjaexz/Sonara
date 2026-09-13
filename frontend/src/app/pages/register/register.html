@@ -1,0 +1,50 @@
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="brand-badge">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9 18V6l10 6-10 6Z" fill="currentColor"></path>
+                </svg>
+            </div>
+            <h1 class="auth-title">Crie sua conta</h1>
+            <p class="auth-subtitle">Comece a ouvir e organizar suas faixas no Sonara.</p>
+        </div>
+
+        @if (errorMessage) {
+        <div class="banner-error">
+            {{ errorMessage }}
+        </div>
+        }
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
+            <div class="field-group">
+                <label for="username">Nome de usuário</label>
+                <input id="username" type="text" placeholder="Como devemos chamar você?" formControlName="username"
+                    autocomplete="username" />
+            </div>
+
+            <div class="field-group">
+                <label for="email">E-mail</label>
+                <input id="email" type="email" placeholder="nome@exemplo.com" formControlName="email"
+                    autocomplete="email" />
+            </div>
+
+            <div class="field-group">
+                <label for="password">Senha</label>
+                <input id="password" type="password" placeholder="Crie uma senha forte" formControlName="password"
+                    autocomplete="new-password" />
+            </div>
+
+            <button type="submit" class="submit-btn" [disabled]="registerForm.invalid">
+                Cadastrar
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            <span>Já possui uma conta?</span>
+            <a routerLink="/login" class="link-highlight">Faça login aqui</a>
+        </div>
+    </div>
+</div>

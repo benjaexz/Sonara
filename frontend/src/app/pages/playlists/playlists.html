@@ -1,0 +1,75 @@
+<header class="view-header">
+    <h1 class="page-title">Playlists</h1>
+    <p class="page-subtitle">Gerencie suas coleções e faixas salvas.</p>
+</header>
+
+<section class="creator-card">
+    <div class="creator-inputs">
+        <div class="input-wrap">
+            <input type="text" placeholder="Título da playlist" [(ngModel)]="name" (keyup.enter)="createPlaylist()" />
+        </div>
+
+        <div class="input-wrap flex-grow">
+            <input type="text" placeholder="Descrição opcional" [(ngModel)]="description"
+                (keyup.enter)="createPlaylist()" />
+        </div>
+
+        <button class="create-btn" (click)="createPlaylist()">
+            Criar Playlist
+        </button>
+    </div>
+</section>
+
+@if (errorMessage) {
+<div class="banner-error">
+    {{ errorMessage }}
+</div>
+}
+
+<div class="playlists-grid">
+    @for (playlist of playlists; track playlist.id) {
+    <article class="playlist-card">
+        <div class="card-header">
+            <span class="track-count-pill">{{ playlist.tracks.length || 0 }} faixas</span>
+
+            <button class="delete-btn" (click)="deletePlaylist(playlist.id)" title="Excluir playlist">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+            </button>
+        </div>
+
+        <div class="card-body">
+            <h3 class="playlist-name">{{ playlist.name }}</h3>
+            <p class="playlist-description">{{ playlist.description || 'Sem descrição' }}</p>
+        </div>
+
+        <div class="tracks-tray">
+            @if (playlist.tracks && playlist.tracks.length > 0) {
+            <ul class="tracks-list">
+                @for (item of playlist.tracks; track item.id) {
+                <li class="track-item">
+                    <span class="track-title" [title]="item.track?.title || item.title">
+                        {{ item.track?.title || item.title }}
+                    </span>
+
+                    <button class="remove-btn" (click)="removeTrack(playlist.id, item.track?.id || item.id)"
+                        title="Remover faixa">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </li>
+                }
+            </ul>
+            } @else {
+            <p class="empty-text">Nenhuma faixa na playlist</p>
+            }
+        </div>
+    </article>
+    }
+</div>

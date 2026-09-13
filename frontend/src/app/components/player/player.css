@@ -1,0 +1,213 @@
+.apple-player {
+    position: fixed;
+    bottom: 20px;
+    /* Centraliza no espaço útil à direita da sidebar (240px) */
+    left: calc(240px + (100% - 240px) / 2);
+    transform: translateX(-50%);
+    width: calc(100% - 240px - 48px);
+    max-width: 1080px;
+    height: 76px;
+    background: rgba(28, 28, 30, 0.8);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 16px 42px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    z-index: 1000;
+    animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+/* Lado Esquerdo: Metadados */
+.player-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 260px;
+    min-width: 0;
+}
+
+.track-artwork {
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+    background: #242426;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #71717a;
+    flex-shrink: 0;
+}
+
+.track-meta {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.track-title {
+    color: #ffffff;
+    font-size: 0.92rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.track-artist {
+    color: #a1a1aa;
+    font-size: 0.78rem;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Centro: Controles + Barra de Progresso */
+.player-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    max-width: 500px;
+}
+
+.transport-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.transport-btn {
+    background: transparent;
+    border: none;
+    color: #d4d4d8;
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    transition: color 0.15s ease, transform 0.1s ease;
+}
+
+.transport-btn:hover {
+    color: #ffffff;
+    transform: scale(1.08);
+}
+
+.play-pill-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #000000;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.play-pill-btn:hover {
+    transform: scale(1.08);
+    background: #f4f4f5;
+}
+
+.progress-bar-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.time-stamp {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: #71717a;
+    font-variant-numeric: tabular-nums;
+}
+
+.progress-track {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 9999px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #fa2d48;
+    border-radius: 9999px;
+}
+
+/* Lado Direito: Controle de Volume */
+.player-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 260px;
+}
+
+.volume-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #a1a1aa;
+}
+
+.volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 9999px;
+    outline: none;
+    cursor: pointer;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Telas menores */
+@media (max-width: 900px) {
+    .player-right {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .apple-player {
+        left: 50%;
+        width: calc(100% - 24px);
+        padding: 0 16px;
+    }
+}
