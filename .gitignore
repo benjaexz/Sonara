@@ -1,1 +1,19 @@
-.env
+# Builds e logs
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+backend/*.log
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/npm-debug.log*
+
+# Configurações de IDE
+.idea/
+.vscode/
+*.iml
+
+# Variáveis e banco local
+*.env
+.env.local
+postgres_data/
+docker-data/
