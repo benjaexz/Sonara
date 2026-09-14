@@ -22,8 +22,13 @@ export class Auth {
       tap((res) => {
         if (res && res.token) {
           localStorage.setItem('sonara_token', res.token);
-          localStorage.setItem('sonara_user', JSON.stringify(res.user || res));
-          this.currentUserSubject.next(res.user || res);
+
+          // Extrai o nome/email das credenciais ou do payload JWT
+          const username = credentials.email || credentials.username || 'User';
+          const userObj = { username };
+
+          localStorage.setItem('sonara_user', JSON.stringify(userObj));
+          this.currentUserSubject.next(userObj);
         }
       })
     );
@@ -45,6 +50,10 @@ export class Auth {
 
   private getUserFromStorage(): any {
     const user = localStorage.getItem('sonara_user');
-    return user ? JSON.parse(user) : null;
+    try {
+      return user ? JSON.parse(user) : null;
+    } catch {
+      return null;
+    }
   }
 }

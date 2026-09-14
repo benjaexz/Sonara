@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet, RouterModule } from '@angular/router';
 import { Auth } from './services/auth';
-import { Player } from './components/player/player'; // ou o caminho do seu PlayerComponent
+import { Player } from './components/player/player';
 
 @Component({
   selector: 'app-root',
@@ -15,12 +15,18 @@ export class App {
   private auth = inject(Auth);
   private router = inject(Router);
 
-  username: string = '';
+  username: string = 'User';
   currentUser$ = this.auth.currentUser$;
 
   constructor() {
     this.currentUser$.subscribe((user: any) => {
-      this.username = user?.username || user?.name || '';
+      if (typeof user === 'string') {
+        this.username = user;
+      } else if (user && typeof user === 'object') {
+        this.username = user.username || user.name || user.email || 'User';
+      } else {
+        this.username = 'User';
+      }
     });
   }
 
@@ -31,5 +37,6 @@ export class App {
 
   logout(): void {
     this.auth.logout();
+    this.router.navigate(['/login']);
   }
 }
