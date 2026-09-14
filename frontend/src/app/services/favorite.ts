@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface FavoriteResponse {
   id: string;
@@ -28,7 +29,7 @@ export interface FavoriteResponse {
   providedIn: 'root',
 })
 export class Favorite {
-  private readonly apiUrl = 'http://localhost:8080/favorites';
+  private readonly apiUrl = `${environment.apiUrl}/favorites`;
 
   constructor(private http: HttpClient) { }
 

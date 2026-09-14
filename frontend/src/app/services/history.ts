@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+
 
 export interface ArtistResponse {
     id: string;
@@ -39,7 +41,7 @@ export interface HistoryItemResponse {
 })
 export class HistoryService {
 
-    private readonly apiUrl = 'http://localhost:8080/history';
+    private readonly apiUrl = `${environment.apiUrl}/history`;
 
     constructor(private http: HttpClient) { }
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface PlaylistResponse {
   id: string;
@@ -19,7 +20,7 @@ export interface PlaylistRequest {
 })
 export class Playlist {
 
-  private readonly apiUrl = 'http://localhost:8080/playlists';
+  private readonly apiUrl = `${environment.apiUrl}/playlists`;
 
   constructor(private http: HttpClient) { }
 

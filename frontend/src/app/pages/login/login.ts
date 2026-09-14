@@ -1,52 +1,48 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 import { Auth } from '../../services/auth';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './login.html',
-  styleUrl: './login.css',
+  styleUrls: ['./login.css']
 })
 export class Login {
-  errorMessage = '';
-
-  loginForm;
+  loginForm: FormGroup;
+  errorMessage: string = '';
+  isLoading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private auth: Auth,
-    private router: Router,
-    private cdr: ChangeDetectorRef
+    private router: Router
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
+      username: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
 
   onSubmit(): void {
     if (this.loginForm.invalid) {
-      this.errorMessage = 'Preencha email e senha corretamente.';
       return;
     }
 
-    const { email, password } = this.loginForm.value;
+    this.isLoading = true;
+    this.errorMessage = '';
 
-    this.auth.login({
-      email: email!,
-      password: password!
-    }).subscribe({
-      next: (response) => {
-        this.auth.saveToken(response.token);
+    this.auth.login(this.loginForm.value).subscribe({
+      next: (response: any) => {
+        this.isLoading = false;
         this.router.navigate(['/']);
       },
-      error: (err) => {
-        console.error('Falha na autenticação:', err);
-        this.errorMessage = err?.error?.message || 'Email ou senha inválidos.';
-        this.cdr.detectChanges();
+      error: (err: any) => {
+        this.isLoading = false;
+        this.errorMessage = err?.error?.message || 'Falha ao autenticar. Verifique suas credenciais.';
       }
     });
   }

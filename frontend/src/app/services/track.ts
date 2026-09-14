@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface TrackResponse {
   id: string;
@@ -28,7 +29,7 @@ export interface TrackResponse {
   providedIn: 'root',
 })
 export class Track {
-  private readonly apiUrl = 'http://localhost:8080/tracks';
+  private readonly apiUrl = `${environment.apiUrl}/tracks`;
 
   constructor(private http: HttpClient) { }
 
