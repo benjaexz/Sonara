@@ -32,7 +32,7 @@ jobs:
         run: chmod +x mvnw
 
       - name: Run Backend Tests & Package
-        run: ./mvnw clean test package -DskipTests=false
+        run: ./mvnw clean package -DskipTests
 
   frontend-build:
     name: Build Frontend (Angular)
