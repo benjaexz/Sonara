@@ -22,7 +22,7 @@ export class Login {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
   }
@@ -35,7 +35,13 @@ export class Login {
     this.isLoading = true;
     this.errorMessage = '';
 
-    this.auth.login(this.loginForm.value).subscribe({
+    const payload = {
+      email: this.loginForm.value.email,
+      username: this.loginForm.value.email, // envia ambos caso seu backend espere username ou email
+      password: this.loginForm.value.password
+    };
+
+    this.auth.login(payload).subscribe({
       next: (response: any) => {
         this.isLoading = false;
         this.router.navigate(['/']);
