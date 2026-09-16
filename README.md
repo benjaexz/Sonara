@@ -168,9 +168,7 @@ npm start
 * [x] Player persistente integrado ao catálogo
 * [x] Gestão de Favoritos e Playlists
 * [x] Deploy Contínuo (Vercel + Render)
-* [ ] Interface visual para avaliações (1 a 5 estrelas) e comentários de faixas
-* [ ] Fila de reprodução avançada com Shuffle / Repeat
-* [ ] Pipeline de CI automatizada com GitHub Actions
+* [x] Pipeline de CI automatizada com GitHub Actions
 
 ---
 
