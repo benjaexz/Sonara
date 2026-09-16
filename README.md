@@ -1,46 +1,24 @@
-O texto está excelente, técnico e valoriza muito o projeto!
+# Sonara — Plataforma de música Full-Stack
 
-Há apenas **dois detalhezinhos de links/Markdown** para corrigir antes do commit:
+> Plataforma web de streaming e gerenciamento musical inspirado no design minimalista de interfaces modernas (Apple Music glassmorphism), construída com arquitetura desacoplada utilizando **Angular 19+** e **Spring Boot 3 (Java 21)**.
 
-1. **No link do clone (Seção 1):**
-* **Como está:** `git clone [https://github.com/benjaexz/Sonara.git](...)`
-* **Como deve ser:** `git clone [https://github.com/benjaexz/Sonara.git](https://github.com/benjaexz/Sonara.git)` (sem os colchetes/parênteses dentro do bloco de código).
-
-
-2. **No link do seu perfil de autor (final):**
-* **Como está:** `[https://www.google.com/search?q=https://github.com/benjaexz](https://www.google.com/search?q=https://github.com/benjaexz)`
-* **Como deve ser:** `[benjaexz](https://github.com/benjaexz)`
-
-
-
----
-
-### Versão Final Pronta para Salvar
-
-Pode copiar e colar exatamente este bloco no seu `README.md`:
-
-```markdown
-# 🎵 Sonara — Full-Stack Music Platform
-
-> Plataforma web de streaming e gerenciamento musical inspirada no design minimalista de interfaces modernas (Apple Music glassmorphism), construída com arquitetura desacoplada utilizando **Angular 19+** e **Spring Boot 3 (Java 21)**.
-
-[![Live Demo](https://img.shields.io/badge/Demo-Vercel-black?style=for-the-badge&logo=vercel)](https://sonara-amber.vercel.app)
+[![Demonstração ao vivo](https://img.shields.io/badge/Demo-Vercel-black?style=for-the-badge&logo=vercel)](https://sonara-amber.vercel.app)
 [![Backend](https://img.shields.io/badge/API-Render-46E3B7?style=for-the-badge&logo=render)](https://sonara-backend-kh00.onrender.com)
 [![Java](https://img.shields.io/badge/Java_21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://openjdk.org/)
-[![Spring Boot](https://img.shields.io/badge/Spring_Boot_3-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![Bota de mola](https://img.shields.io/badge/Spring_Boot_3-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![Angular](https://img.shields.io/badge/Angular_19-DD0031?style=for-the-badge&logo=angular&logoColor=white)](https://angular.dev/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 
 ---
 
-## 🚀 Live Demo & Acesso Rápido
+## 🚀 Demonstração ao vivo e acesso rápido
 
 - **Frontend (SPA):** [https://sonara-amber.vercel.app](https://sonara-amber.vercel.app)
 - **API Swagger / OpenAPI:** [https://sonara-backend-kh00.onrender.com/swagger-ui/index.html](https://sonara-backend-kh00.onrender.com/swagger-ui/index.html)
 
-> 💡 **Usuário de Teste (Recrutadores / Demonstração):**
-> Se preferir não cadastrar um novo usuário, utilize as credenciais de homologação:
+> 💡 **Uso de Teste (Recrutadores / Demonstração):**
+> Se preferir não cadastrar um novo usuário, utilize como credenciais de homologação:
 > - **E-mail:** `demo@sonara.io`
 > - **Senha:** `Sonara@123`
 
@@ -50,7 +28,7 @@ Pode copiar e colar exatamente este bloco no seu `README.md`:
 
 O Sonara adota o padrão de **arquitetura em camadas desacopladas**, dividida em um cliente Single Page Application (SPA), uma API RESTful stateless e um banco de dados relacional.
 
-```text
+```texto
                Navegador / Cliente
                        │
              HTTPS (Bearer JWT)
