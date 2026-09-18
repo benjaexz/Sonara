@@ -1,20 +1,136 @@
-# Sonara — Plataforma de música Full-Stack
+# Sonara 🎵
 
-> Plataforma web de streaming e gerenciamento musical inspirado no design minimalista de interfaces modernas (Apple Music glassmorphism), construída com arquitetura desacoplada utilizando **Angular 19+** e **Spring Boot 3 (Java 21)**.
+O **Sonara** é uma plataforma completa de transmissão e gestão musical, desenvolvida com uma arquitetura desacoplada e profissional: um cliente web moderno em **Angular**, uma API robusta em **Java 21 / Spring Boot 3**, persistência relacional com **PostgreSQL**, suporte a execução via **Docker** e alojamento contínuo na nuvem.
 
-?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+---
 
-Sonara — Backend APIBackend RESTful para a plataforma de streaming e gerenciamento musical Sonara, arquitetado com foco em segurança, persistência relacional, desacoplamento em camadas e cobertura abrangente de testes automatizados.📑 SumárioVisão GeralStack TecnológicaArquitetura do ProjetoEndpoints PrincipaisDocumentação Interativa (Swagger)Suíte de TestesConfiguração de AmbienteComo ExecutarCom Docker ComposeLocalmente com MavenLicença🎯 Visão GeralA API do Sonara fornece a infraestrutura de serviços para reprodução e organização do ecossistema sonoro da plataforma, contemplando:Autenticação e autorização stateless via JWT (JSON Web Tokens).Gerenciamento de biblioteca pessoal: Playlists, Favoritos e Avaliações (Ratings 1-5).Catálogo musical contendo Artistas, Álbuns, Faixas e metadados.Tratamento global padronizado de exceções (GlobalExceptionHandler).Política de CORS parametrizada para ambientes de desenvolvimento e produção (Vercel).🛠️ Stack TecnológicaComponenteTecnologiaVersão / DetalhesLinguagemJava21 (LTS)FrameworkSpring Boot3.5.14SegurançaSpring Security + JJWTAutenticação Stateless via Bearer TokensPersistênciaSpring Data JPA / HibernateORM com mapeamentos relacionaisBanco de DadosPostgreSQLDialeto relacional robustoDocumentaçãoSpringDoc OpenAPIOpenAPI 3.1 & Swagger UI 2.8.5TestesJUnit 5 + Mockito + MockMvcSuíte unitária, web e de segurançaDevOpsDocker & Docker ComposeImagens multi-stage para deploy enxuto🏛️ Arquitetura do ProjetoA organização de pacotes segue o padrão em camadas desacopladas:Plaintextio.sonara/
-├── config/             # Configurações globais (Segurança, CORS, OpenAPI)
-├── controller/         # Camada Web / REST Controllers
-├── dto/                # Data Transfer Objects (Requests/Responses)
-├── exception/          # Handlers globais e exceções de domínio
-├── model/              # Entidades JPA (User, Track, Playlist, Favorite, etc.)
-├── repository/         # Interfaces Spring Data JPA
-├── security/           # Filtro JWT, UserDetailsService e validação de tokens
-└── service/            # Regras de negócio, transações e validações de ownership
-📡 Endpoints PrincipaisMóduloMétodoEndpointProtegido?DescriçãoAuthPOST/auth/login❌Gera o token JWT para o usuárioAuthPOST/auth/register❌Cadastro de novas contasPlaylistsGET/playlists✅Lista playlists públicas/pessoaisPlaylistsPOST/playlists✅Cria uma nova playlistPlaylistsPOST/playlists/{id}/tracks✅Adiciona uma faixa à playlistPlaylistsDELETE/playlists/{id}✅Remove playlist (validação de dono)FavoritosGET/favorites✅Retorna músicas favoritadas pelo usuárioFavoritosPOST/favorites/{trackId}✅Adiciona faixa aos favoritosFavoritosDELETE/favorites/{trackId}✅Remove faixa dos favoritosAvaliaçõesPOST/ratings✅Avalia faixa com nota (1 a 5)FaixasGET/faixas/{id}✅Detalhes e streaming de metadados📖 Documentação Interativa (Swagger)A API disponibiliza documentação interativa através do Swagger UI com suporte total a autenticação Bearer Token:Swagger UI: http://localhost:8080/swagger-ui/index.html (ou na URL pública da sua API)OpenAPI Spec (JSON): http://localhost:8080/v3/api-docsComo testar endpoints protegidos no Swagger:Realize a chamada de autenticação em POST /auth/login e copie o token gerado.Clique no botão verde Authorize no topo direito da tela.No campo de valor, cole o token JWT e confirme. As requisições passarão a incluir o header Authorization: Bearer <token>.🧪 Suíte de TestesA integridade do código é assegurada por 33 testes automatizados distribuídos entre as camadas críticas da aplicação:Regras de Negócio (io.sonara.service): Testes unitários com JUnit 5 e Mockito, validando ordenação sequencial de faixas, integridade referencial, bloqueio de notas fora da faixa 1-5 e ownership de playlists.Camada Web (io.sonara.controller): Testes de integração leves com @WebMvcTest e MockMvc, garantindo status HTTP (200, 201, 204, 404, 409), parsing correto de payloads e tratamento via GlobalExceptionHandler.Filtros de Segurança (io.sonara.security): Validação de bloqueio de acessos não autorizados em rotas privadas (401/403) e garantia de rotas públicas liberadas.Para executar todos os testes localmente:Bash./mvnw test
-⚙️ Configuração de AmbienteCrie um arquivo .env na raiz do projeto (ou configure as variáveis no seu ambiente de nuvem/Docker):Snippet de código# Banco de Dados
+## 📑 Índice
+
+* [Arquitetura da Solução](https://www.google.com/search?q=%2523-arquitetura-da-solu%25C3%25A7%25C3%25A3o&utm_source=gemini)
+* [Funcionalidades](https://www.google.com/search?q=%2523-funcionalidades&utm_source=gemini)
+* [Stack Tecnológica Completa](https://www.google.com/search?q=%2523-stack-tecnol%25C3%25B3gica-completa&utm_source=gemini)
+* [Estrutura do Repositório](https://www.google.com/search?q=%2523-estrutura-do-reposit%25C3%25B3rio&utm_source=gemini)
+* [Documentação da API (Swagger UI)](https://www.google.com/search?q=%2523-documenta%25C3%25A7%25C3%25A3o-da-api-swagger-ui&utm_source=gemini)
+* [Testes Automatizados](https://www.google.com/search?q=%2523-testes-automatizados&utm_source=gemini)
+* [Configuração de Variáveis de Ambiente](https://www.google.com/search?q=%2523-configura%25C3%25A7%25C3%25A3o-de-vari%25C3%25A1veis-de-ambiente&utm_source=gemini)
+* [Como Executar o Projeto](https://www.google.com/search?q=%2523-como-executar-o-projeto&utm_source=gemini)
+* [Execução Completa com Docker Compose](https://www.google.com/search?q=%25231-execu%25C3%25A7%25C3%25A3o-completa-com-docker-compose-recomendado&utm_source=gemini)
+* [Execução Manual (Desenvolvimento Local)](https://www.google.com/search?q=%25232-execu%25C3%25A7%25C3%25A3o-manual-desenvolvimento-local&utm_source=gemini)
+
+
+* [Implementação (Deploy)](https://www.google.com/search?q=%2523-implementa%25C3%25A7%25C3%25A3o-deploy&utm_source=gemini)
+* [Licença](https://www.google.com/search?q=%2523-licen%25C3%25A7a&utm_source=gemini)
+
+---
+
+## 🏛️ Arquitetura da Solução
+
+O projeto está estruturado em monorepo contendo dois módulos principais e totalmente desacoplados:
+
+* **Frontend (SPA):** Interface reativa desenvolvida em Angular com TypeScript, consumindo a API REST de forma autenticada via cabeçalhos HTTP (`Authorization: Bearer <token>`).
+* **Backend (API RESTful):** Desenvolvido em Spring Boot com Spring Security, gestão de sessões stateless via JWT, validação de integridade de dados e arquitetura em camadas.
+* **Banco de Dados Relacional:** PostgreSQL gerido via Spring Data JPA e Hibernate, com mapeamentos de entidades estruturados para relacionamentos N:N e 1:N (listas de reprodução, faixas, avaliações e favoritos).
+
+---
+
+## ✨ Funcionalidades
+
+* **Autenticação & Segurança:** Registo e login de utilizadores com encriptação BCrypt e emissão de tokens JWT seguros.
+* **Catálogo de Áudio:** Exploração e reprodução de faixas, artistas e álbuns.
+* **Gestão de Listas de Reprodução (Playlists):** Criação, edição, exclusão e reordenação de faixas com validação rigorosa de posse (*ownership*).
+* **Favoritos:** Marcação e gestão de faixas prediletas pelo utilizador autenticado.
+* **Classificações (Ratings):** Sistema de pontuação e avaliação de faixas de 1 a 5 estrelas.
+* **Tratamento de Exceções Centralizado:** Retorno padronizado de erros HTTP (400, 401, 403, 404, 409) através de um gestor global.
+
+---
+
+## 🛠️ Stack Tecnológica Completa
+
+| Camada | Tecnologia | Detalhes |
+| --- | --- | --- |
+| **Frontend** | Angular | Aplicação Single Page em TypeScript |
+| **Backend** | Java 21 & Spring Boot 3.5.14 | API REST com gestão de ciclo de vida Maven |
+| **Segurança** | Spring Security + JJWT 0.12.6 | Controlo de acesso granular e tokens JWT |
+| **Base de Dados** | PostgreSQL | Armazenamento relacional e integridade referencial |
+| **ORM** | Spring Data JPA / Hibernate | Abstração de persistência e repositórios desacoplados |
+| **Documentação** | SpringDoc OpenAPI 2.8.5 | Interface gráfica interativa (Swagger UI 3.1) |
+| **Qualidade & Testes** | JUnit 5 + Mockito + MockMvc | 33 testes automatizados (unitários, web e segurança) |
+| **DevOps** | Docker / Docker Compose | Contentorização multi-stage e orquestração de serviços |
+| **Alojamento (Web)** | Vercel | Implementação contínua da aplicação de frontend |
+
+---
+
+## 📁 Estrutura do Repositório
+
+```text
+Sonara/
+├── backend/                       # API REST em Spring Boot
+│   ├── src/
+│   │   ├── main/java/io/sonara/
+│   │   │   ├── config/            # Segurança, CORS e OpenAPI/Swagger
+│   │   │   ├── controller/        # Controladores REST da API
+│   │   │   ├── dto/               # Objetos de transferência de dados (DTOs)
+│   │   │   ├── exception/         # Tratamento global de erros
+│   │   │   ├── model/             # Entidades relacionais JPA
+│   │   │   ├── repository/        # Repositórios Spring Data JPA
+│   │   │   ├── security/          # Filtros JWT e UserDetailsService
+│   │   │   └── service/           # Regras de negócio e validações
+│   │   └── test/                  # Suíte completa de testes automatizados
+│   ├── Dockerfile                 # Construção multi-stage da API
+│   └── pom.xml                    # Gestor de dependências do ecossistema Java
+│
+├── frontend/                      # Aplicação web SPA
+│   ├── src/                       # Componentes, serviços, rotas e estilos Angular
+│   ├── package.json               # Dependências do ecossistema Node/TypeScript
+│   └── angular.json               # Configurações de compilação da interface
+│
+├── docker-compose.yml             # Orquestração local de base de dados e serviços
+└── README.md                      # Documentação geral do ecossistema
+
+```
+
+---
+
+## 📖 Documentação da API (Swagger UI)
+
+A API disponibiliza documentação interativa através da especificação OpenAPI 3:
+
+* **Swagger UI:** `http://localhost:8080/swagger-ui/index.html` (ou no URL do seu deploy backend)
+* **OpenAPI Spec (JSON):** `http://localhost:8080/v3/api-docs`
+
+> **Autenticação no Swagger:**
+> 1. Efetue a requisição em `POST /auth/login` para recolher o token JWT.
+> 2. Clique no botão **Authorize** (ou **Autorizar**) no topo da interface.
+> 3. Cole o token gerado para desbloquear a execução dos endpoints protegidos.
+> 
+> 
+
+---
+
+## 🧪 Testes Automatizados
+
+A estabilidade e fiabilidade do backend são validadas por **33 testes automatizados**:
+
+* **Camada de Serviços (Unitários):** Isolamento total via Mockito para validação de regras de negócio, bloqueio de avaliações inválidas e regras de acesso de utilizador.
+* **Camada Web (Integração de Controladores):** Uso de `MockMvc` para validar status HTTP (200, 201, 204, 404, 409), serialização JSON e mapeamento de exceções.
+* **Camada de Segurança:** Validação de filtros para bloqueio de acessos anónimos a rotas protegidas e libertação de rotas públicas.
+
+Para executar os testes do backend:
+
+```bash
+cd backend
+./mvnw test
+
+```
+
+---
+
+## ⚙️ Configuração de Variáveis de Ambiente
+
+Crie um ficheiro `.env` na raiz do diretório `backend` (ou configure os valores nas variáveis do contentor/nuvem):
+
+```env
+# Base de Dados
 SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/sonara_db
 SPRING_DATASOURCE_USERNAME=postgres
 SPRING_DATASOURCE_PASSWORD=postgres
@@ -23,20 +139,73 @@ SPRING_DATASOURCE_PASSWORD=postgres
 SPRING_JPA_HIBERNATE_DDL_AUTO=update
 SPRING_JPA_SHOW_SQL=false
 
-# Segurança / JWT
-JWT_SECRET=sua_chave_secreta_jwt_longa_e_aleatoria_com_mais_de_256_bits
+# Autenticação JWT
+JWT_SECRET=chave_secreta_jwt_longa_e_aleatoria_com_mais_de_256_bits
 JWT_EXPIRATION=86400000
 
 # CORS
 CORS_ALLOWED_ORIGINS=http://localhost:4200,https://sonara-amber.vercel.app
-🚀 Como Executar1. Via Docker Compose (Recomendado)Sobe o banco PostgreSQL e a aplicação com uma única instrução:Bash# Constrói e inicializa os containers em segundo plano
+
+```
+
+---
+
+## 🚀 Como Executar o Projeto
+
+### 1. Execução Completa com Docker Compose (Recomendado)
+
+Inicie todos os contentores do ecossistema através de um único comando:
+
+```bash
+# Construir e iniciar os contentores em segundo plano
 docker compose up -d --build
 
-# Acompanhar logs da API
-docker compose logs -f backend
+# Inspecionar os registos de execução (logs)
+docker compose logs -f
 
-# Encerrar os serviços
+# Parar a execução dos serviços
 docker compose down
-2. Execução Local com MavenCertifique-se de ter o PostgreSQL rodando localmente na porta configurada:Bash# Compilar e rodar a aplicação
-./mvnw spring-boot:run
-A API estará disponível em http://localhost:8080.📄 LicençaEste projeto está sob a licença MIT. Desenvolvido por Jacó Lima.
+
+```
+
+---
+
+### 2. Execução Manual (Desenvolvimento Local)
+
+#### Executar o Backend
+
+Certifique-se de que possui o **Java 21** e uma instância ativa do **PostgreSQL** na sua máquina:
+
+```bash
+cd backend
+./mvnw clean spring-boot:run
+
+```
+
+*A API ficará disponível em `http://localhost:8080`.*
+
+#### Executar o Frontend
+
+Certifique-se de que possui o **Node.js** (versão 18 ou superior) instalado:
+
+```bash
+cd frontend
+npm install
+npm start
+
+```
+
+*A interface web ficará acessível em `http://localhost:4200`.*
+
+---
+
+## 🌐 Implementação (Deploy)
+
+* **Aplicação Web (Frontend):** Alojada e sincronizada através da Vercel: [sonara-amber.vercel.app](https://sonara-amber.vercel.app?utm_source=gemini)
+* **Backend:** Empacotado via contentor Docker e implementado em ambiente de nuvem integrado com base de dados PostgreSQL gerida.
+
+---
+
+## 📄 Licença
+
+Este projeto está distribuído sob a licença [MIT](https://www.google.com/search?q=LICENSE&utm_source=gemini). Desenvolvido por [Jacó Lima](https://www.google.com/search?q=https://github.com/benjaexz&utm_source=gemini).
