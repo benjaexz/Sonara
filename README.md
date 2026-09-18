@@ -4,22 +4,29 @@ O **Sonara** é uma plataforma completa de transmissão e gestão musical, desen
 
 ---
 
+## 📸 Screenshots
+
+| Login | Músicas Curtidas |
+|---|---|
+| ![Login](Screenshots/login.png) | ![Músicas Curtidas](Screenshots/Musicascurtidas.png) |
+
+---
+
 ## 📑 Índice
 
-* [Arquitetura da Solução](https://www.google.com/search?q=%2523-arquitetura-da-solu%25C3%25A7%25C3%25A3o&utm_source=gemini)
-* [Funcionalidades](https://www.google.com/search?q=%2523-funcionalidades&utm_source=gemini)
-* [Stack Tecnológica Completa](https://www.google.com/search?q=%2523-stack-tecnol%25C3%25B3gica-completa&utm_source=gemini)
-* [Estrutura do Repositório](https://www.google.com/search?q=%2523-estrutura-do-reposit%25C3%25B3rio&utm_source=gemini)
-* [Documentação da API (Swagger UI)](https://www.google.com/search?q=%2523-documenta%25C3%25A7%25C3%25A3o-da-api-swagger-ui&utm_source=gemini)
-* [Testes Automatizados](https://www.google.com/search?q=%2523-testes-automatizados&utm_source=gemini)
-* [Configuração de Variáveis de Ambiente](https://www.google.com/search?q=%2523-configura%25C3%25A7%25C3%25A3o-de-vari%25C3%25A1veis-de-ambiente&utm_source=gemini)
-* [Como Executar o Projeto](https://www.google.com/search?q=%2523-como-executar-o-projeto&utm_source=gemini)
-* [Execução Completa com Docker Compose](https://www.google.com/search?q=%25231-execu%25C3%25A7%25C3%25A3o-completa-com-docker-compose-recomendado&utm_source=gemini)
-* [Execução Manual (Desenvolvimento Local)](https://www.google.com/search?q=%25232-execu%25C3%25A7%25C3%25A3o-manual-desenvolvimento-local&utm_source=gemini)
-
-
-* [Implementação (Deploy)](https://www.google.com/search?q=%2523-implementa%25C3%25A7%25C3%25A3o-deploy&utm_source=gemini)
-* [Licença](https://www.google.com/search?q=%2523-licen%25C3%25A7a&utm_source=gemini)
+* [Screenshots](#-screenshots)
+* [Arquitetura da Solução](#-arquitetura-da-solução)
+* [Funcionalidades](#-funcionalidades)
+* [Stack Tecnológica Completa](#-stack-tecnológica-completa)
+* [Estrutura do Repositório](#-estrutura-do-repositório)
+* [Documentação da API (Swagger UI)](#-documentação-da-api-swagger-ui)
+* [Testes Automatizados](#-testes-automatizados)
+* [Configuração de Variáveis de Ambiente](#-configuração-de-variáveis-de-ambiente)
+* [Como Executar o Projeto](#-como-executar-o-projeto)
+  * [Execução Completa com Docker Compose](#1-execução-completa-com-docker-compose-recomendado)
+  * [Execução Manual (Desenvolvimento Local)](#2-execução-manual-desenvolvimento-local)
+* [Implementação (Deploy)](#-implementação-deploy)
+* [Licença](#-licença)
 
 ---
 
@@ -56,6 +63,7 @@ O projeto está estruturado em monorepo contendo dois módulos principais e tota
 | **Documentação** | SpringDoc OpenAPI 2.8.5 | Interface gráfica interativa (Swagger UI 3.1) |
 | **Qualidade & Testes** | JUnit 5 + Mockito + MockMvc | 33 testes automatizados (unitários, web e segurança) |
 | **DevOps** | Docker / Docker Compose | Contentorização multi-stage e orquestração de serviços |
+| **CI/CD** | GitHub Actions | Pipeline automatizada de build e testes |
 | **Alojamento (Web)** | Vercel | Implementação contínua da aplicação de frontend |
 
 ---
@@ -84,9 +92,9 @@ Sonara/
 │   ├── package.json               # Dependências do ecossistema Node/TypeScript
 │   └── angular.json               # Configurações de compilação da interface
 │
+├── .github/workflows/             # Pipeline de CI/CD (GitHub Actions)
 ├── docker-compose.yml             # Orquestração local de base de dados e serviços
 └── README.md                      # Documentação geral do ecossistema
-
 ```
 
 ---
@@ -95,15 +103,14 @@ Sonara/
 
 A API disponibiliza documentação interativa através da especificação OpenAPI 3:
 
-* **Swagger UI:** `http://localhost:8080/swagger-ui/index.html` (ou no URL do seu deploy backend)
+* **Swagger UI (local):** `http://localhost:8080/swagger-ui/index.html`
+* **Swagger UI (produção):** `https://sonara-backend-kh00.onrender.com/swagger-ui/index.html`
 * **OpenAPI Spec (JSON):** `http://localhost:8080/v3/api-docs`
 
 > **Autenticação no Swagger:**
 > 1. Efetue a requisição em `POST /auth/login` para recolher o token JWT.
 > 2. Clique no botão **Authorize** (ou **Autorizar**) no topo da interface.
 > 3. Cole o token gerado para desbloquear a execução dos endpoints protegidos.
-> 
-> 
 
 ---
 
@@ -120,7 +127,6 @@ Para executar os testes do backend:
 ```bash
 cd backend
 ./mvnw test
-
 ```
 
 ---
@@ -145,7 +151,6 @@ JWT_EXPIRATION=86400000
 
 # CORS
 CORS_ALLOWED_ORIGINS=http://localhost:4200,https://sonara-amber.vercel.app
-
 ```
 
 ---
@@ -165,7 +170,6 @@ docker compose logs -f
 
 # Parar a execução dos serviços
 docker compose down
-
 ```
 
 ---
@@ -179,7 +183,6 @@ Certifique-se de que possui o **Java 21** e uma instância ativa do **PostgreSQL
 ```bash
 cd backend
 ./mvnw clean spring-boot:run
-
 ```
 
 *A API ficará disponível em `http://localhost:8080`.*
@@ -192,7 +195,6 @@ Certifique-se de que possui o **Node.js** (versão 18 ou superior) instalado:
 cd frontend
 npm install
 npm start
-
 ```
 
 *A interface web ficará acessível em `http://localhost:4200`.*
@@ -201,11 +203,13 @@ npm start
 
 ## 🌐 Implementação (Deploy)
 
-* **Aplicação Web (Frontend):** Alojada e sincronizada através da Vercel: [sonara-amber.vercel.app](https://sonara-amber.vercel.app?utm_source=gemini)
-* **Backend:** Empacotado via contentor Docker e implementado em ambiente de nuvem integrado com base de dados PostgreSQL gerida.
+* **Frontend:** Alojado e sincronizado através da Vercel: [sonara-amber.vercel.app](https://sonara-amber.vercel.app)
+* **Backend:** Empacotado via contentor Docker e implementado no Render, integrado com base de dados PostgreSQL gerida: [sonara-backend-kh00.onrender.com](https://sonara-backend-kh00.onrender.com)
+
+> ⚠️ O backend está hospedado no plano gratuito do Render, que hiberna após inatividade — a primeira requisição após um período parado pode levar cerca de 50 segundos para responder.
 
 ---
 
 ## 📄 Licença
 
-Este projeto está distribuído sob a licença [MIT](https://www.google.com/search?q=LICENSE&utm_source=gemini). Desenvolvido por [Jacó Lima](https://www.google.com/search?q=https://github.com/benjaexz&utm_source=gemini).
+Este projeto está distribuído sob a licença [MIT](LICENSE). Desenvolvido por [Jacó Lima](https://github.com/benjaexz).
