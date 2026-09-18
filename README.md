@@ -2,178 +2,41 @@
 
 > Plataforma web de streaming e gerenciamento musical inspirado no design minimalista de interfaces modernas (Apple Music glassmorphism), construída com arquitetura desacoplada utilizando **Angular 19+** e **Spring Boot 3 (Java 21)**.
 
-[![Demonstração ao vivo](https://img.shields.io/badge/Demo-Vercel-black?style=for-the-badge&logo=vercel)](https://sonara-amber.vercel.app)
-[![Backend](https://img.shields.io/badge/API-Render-46E3B7?style=for-the-badge&logo=render)](https://sonara-backend-kh00.onrender.com)
-[![Java](https://img.shields.io/badge/Java_21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://openjdk.org/)
-[![Bota de mola](https://img.shields.io/badge/Spring_Boot_3-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)](https://spring.io/projects/spring-boot)
-[![Angular](https://img.shields.io/badge/Angular_19-DD0031?style=for-the-badge&logo=angular&logoColor=white)](https://angular.dev/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 
----
+Sonara — Backend APIBackend RESTful para a plataforma de streaming e gerenciamento musical Sonara, arquitetado com foco em segurança, persistência relacional, desacoplamento em camadas e cobertura abrangente de testes automatizados.📑 SumárioVisão GeralStack TecnológicaArquitetura do ProjetoEndpoints PrincipaisDocumentação Interativa (Swagger)Suíte de TestesConfiguração de AmbienteComo ExecutarCom Docker ComposeLocalmente com MavenLicença🎯 Visão GeralA API do Sonara fornece a infraestrutura de serviços para reprodução e organização do ecossistema sonoro da plataforma, contemplando:Autenticação e autorização stateless via JWT (JSON Web Tokens).Gerenciamento de biblioteca pessoal: Playlists, Favoritos e Avaliações (Ratings 1-5).Catálogo musical contendo Artistas, Álbuns, Faixas e metadados.Tratamento global padronizado de exceções (GlobalExceptionHandler).Política de CORS parametrizada para ambientes de desenvolvimento e produção (Vercel).🛠️ Stack TecnológicaComponenteTecnologiaVersão / DetalhesLinguagemJava21 (LTS)FrameworkSpring Boot3.5.14SegurançaSpring Security + JJWTAutenticação Stateless via Bearer TokensPersistênciaSpring Data JPA / HibernateORM com mapeamentos relacionaisBanco de DadosPostgreSQLDialeto relacional robustoDocumentaçãoSpringDoc OpenAPIOpenAPI 3.1 & Swagger UI 2.8.5TestesJUnit 5 + Mockito + MockMvcSuíte unitária, web e de segurançaDevOpsDocker & Docker ComposeImagens multi-stage para deploy enxuto🏛️ Arquitetura do ProjetoA organização de pacotes segue o padrão em camadas desacopladas:Plaintextio.sonara/
+├── config/             # Configurações globais (Segurança, CORS, OpenAPI)
+├── controller/         # Camada Web / REST Controllers
+├── dto/                # Data Transfer Objects (Requests/Responses)
+├── exception/          # Handlers globais e exceções de domínio
+├── model/              # Entidades JPA (User, Track, Playlist, Favorite, etc.)
+├── repository/         # Interfaces Spring Data JPA
+├── security/           # Filtro JWT, UserDetailsService e validação de tokens
+└── service/            # Regras de negócio, transações e validações de ownership
+📡 Endpoints PrincipaisMóduloMétodoEndpointProtegido?DescriçãoAuthPOST/auth/login❌Gera o token JWT para o usuárioAuthPOST/auth/register❌Cadastro de novas contasPlaylistsGET/playlists✅Lista playlists públicas/pessoaisPlaylistsPOST/playlists✅Cria uma nova playlistPlaylistsPOST/playlists/{id}/tracks✅Adiciona uma faixa à playlistPlaylistsDELETE/playlists/{id}✅Remove playlist (validação de dono)FavoritosGET/favorites✅Retorna músicas favoritadas pelo usuárioFavoritosPOST/favorites/{trackId}✅Adiciona faixa aos favoritosFavoritosDELETE/favorites/{trackId}✅Remove faixa dos favoritosAvaliaçõesPOST/ratings✅Avalia faixa com nota (1 a 5)FaixasGET/faixas/{id}✅Detalhes e streaming de metadados📖 Documentação Interativa (Swagger)A API disponibiliza documentação interativa através do Swagger UI com suporte total a autenticação Bearer Token:Swagger UI: http://localhost:8080/swagger-ui/index.html (ou na URL pública da sua API)OpenAPI Spec (JSON): http://localhost:8080/v3/api-docsComo testar endpoints protegidos no Swagger:Realize a chamada de autenticação em POST /auth/login e copie o token gerado.Clique no botão verde Authorize no topo direito da tela.No campo de valor, cole o token JWT e confirme. As requisições passarão a incluir o header Authorization: Bearer <token>.🧪 Suíte de TestesA integridade do código é assegurada por 33 testes automatizados distribuídos entre as camadas críticas da aplicação:Regras de Negócio (io.sonara.service): Testes unitários com JUnit 5 e Mockito, validando ordenação sequencial de faixas, integridade referencial, bloqueio de notas fora da faixa 1-5 e ownership de playlists.Camada Web (io.sonara.controller): Testes de integração leves com @WebMvcTest e MockMvc, garantindo status HTTP (200, 201, 204, 404, 409), parsing correto de payloads e tratamento via GlobalExceptionHandler.Filtros de Segurança (io.sonara.security): Validação de bloqueio de acessos não autorizados em rotas privadas (401/403) e garantia de rotas públicas liberadas.Para executar todos os testes localmente:Bash./mvnw test
+⚙️ Configuração de AmbienteCrie um arquivo .env na raiz do projeto (ou configure as variáveis no seu ambiente de nuvem/Docker):Snippet de código# Banco de Dados
+SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/sonara_db
+SPRING_DATASOURCE_USERNAME=postgres
+SPRING_DATASOURCE_PASSWORD=postgres
 
-## 🚀 Demonstração ao vivo e acesso rápido
+# JPA / Hibernate
+SPRING_JPA_HIBERNATE_DDL_AUTO=update
+SPRING_JPA_SHOW_SQL=false
 
-- **Frontend (SPA):** [https://sonara-amber.vercel.app](https://sonara-amber.vercel.app)
-- **API Swagger / OpenAPI:** [https://sonara-backend-kh00.onrender.com/swagger-ui/index.html](https://sonara-backend-kh00.onrender.com/swagger-ui/index.html)
+# Segurança / JWT
+JWT_SECRET=sua_chave_secreta_jwt_longa_e_aleatoria_com_mais_de_256_bits
+JWT_EXPIRATION=86400000
 
-> 💡 **Uso de Teste (Recrutadores / Demonstração):**
-> Se preferir não cadastrar um novo usuário, utilize como credenciais de homologação:
-> - **E-mail:** `demo@sonara.io`
-> - **Senha:** `Sonara@123`
+# CORS
+CORS_ALLOWED_ORIGINS=http://localhost:4200,https://sonara-amber.vercel.app
+🚀 Como Executar1. Via Docker Compose (Recomendado)Sobe o banco PostgreSQL e a aplicação com uma única instrução:Bash# Constrói e inicializa os containers em segundo plano
+docker compose up -d --build
 
----
+# Acompanhar logs da API
+docker compose logs -f backend
 
-## 🏛️ Visão Geral da Arquitetura
-
-O Sonara adota o padrão de **arquitetura em camadas desacopladas**, dividida em um cliente Single Page Application (SPA), uma API RESTful stateless e um banco de dados relacional.
-
-```texto
-               Navegador / Cliente
-                       │
-             HTTPS (Bearer JWT)
-                       ▼
-          ┌─────────────────────────┐
-          │   Angular Frontend      │  (Vercel SPA)
-          │  Zone.js + HttpGuard    │
-          └────────────┬────────────┘
-                       │ REST / JSON
-                       ▼
-          ┌─────────────────────────┐
-          │   Spring Boot 3 API     │  (Render Container)
-          │  Security + JWT Filter  │
-          └────────────┬────────────┘
-                       │ Spring Data JPA / JDBC
-                       ▼
-          ┌─────────────────────────┐
-          │   PostgreSQL Database   │  (Supabase / Cloud SQL)
-          └─────────────────────────┘
-
-```
-
----
-
-## ⚙️ Decisões de Engenharia & Destaques Técnicos
-
-1. **Autenticação Stateless com JWT & BCrypt:**
-* Senhas criptografadas com `BCryptPasswordEncoder` no cadastro.
-* Emissão e validação de tokens JWT (`io.jsonwebtoken`) no fluxo de login.
-* Camada de segurança personalizada com `JwtAuthenticationFilter` estendendo `OncePerRequestFilter` e populando o `SecurityContextHolder`.
-
-
-2. **Frontend Interceptors & Proteção de Rotas:**
-* **`authInterceptor`**: Intercepta dinamicamente requisições HTTP e injeta o header `Authorization: Bearer <TOKEN>` para rotas autenticadas.
-* **`authGuard` (`CanActivateFn`)**: Impede o carregamento de views protegidas (`/`, `/favorites`, `/playlists`, `/history`), redirecionando acessos não autorizados para `/login`.
-
-
-3. **Ciclo de Estabilidade Angular & Zone.js:**
-* Configuração de polyfill `zone.js` no bootstrap da aplicação para evitar discrepâncias em loops de renderização assíncronos (`NG0908`).
-* Gerenciamento reativo de estado de autenticação via `BehaviorSubject` do RxJS, garantindo sincronia imediata entre o header, sidebar e player.
-
-
-4. **Tratamento de Lazy Loading e DTOs:**
-* Implementação de DTOs (`TrackResponseDTO`, `AlbumResponseDTO`, etc.) desacoplados das entidades JPA para evitar `LazyInitializationException` e loops infinitos de serialização bidirecional Jackson.
-* `GlobalExceptionHandler` centralizado (`@RestControllerAdvice`) tratando `ResourceNotFoundException`, `DuplicateResourceException` e violações de Bean Validation com respostas padronizadas (`ErrorResponse`).
-
-
-5. **Infraestrutura & CORS Multi-Ambiente:**
-* Configuração dinâmica de políticas de CORS (`CorsConfigurationSource`) permitindo requisições controladas tanto de ambientes locais (`http://localhost:4200`) quanto do domínio de produção (`https://sonara-amber.vercel.app`).
-
-
-
----
-
-## 📦 Modelo de Domínio
-
-O ecossistema modela o catálogo e recursos exclusivos de usuário:
-
-* **Catálogo:** `Artist` ➔ `Album` ➔ `Track` ➔ `Genre`
-* **Usuário:** `User` com senhas em hash e username único
-* **Músicas & Playlists:** `Playlist` ➔ `PlaylistTrack` (com posição indexada)
-* **Engajamento:** `Favorite` (com restrição única por usuário/faixa), `ListeningHistory`, `TrackRating` (1 a 5) e `TrackComment`.
-
----
-
-## 🛠️ Stack Tecnológica
-
-| Camada | Tecnologias |
-| --- | --- |
-| **Frontend** | Angular 19, TypeScript, RxJS, Zone.js, HTML5 / CSS3 Moderno |
-| **Backend** | Java 21, Spring Boot 3, Spring Security, Spring Data JPA / Hibernate |
-| **Banco de Dados** | PostgreSQL |
-| **Segurança** | JWT (JSON Web Tokens), BCrypt |
-| **Documentação** | Swagger / OpenAPI 3 |
-| **DevOps & Deploy** | Docker, Docker Compose, Git, Vercel, Render |
-
----
-
-## 💻 Executando Localmente
-
-### Pré-requisitos
-
-* [Docker & Docker Compose](https://www.docker.com/) instalados **OU**
-* Java 21 SDK + Node.js 20+ + PostgreSQL local.
-
-### 1. Clonar o Repositório
-
-```bash
-git clone [https://github.com/benjaexz/Sonara.git](https://github.com/benjaexz/Sonara.git)
-cd Sonara
-
-```
-
-### 2. Rodando via Docker Compose (Recomendado)
-
-```bash
-docker-compose up -d --build
-
-```
-
-* Frontend acessível em: `http://localhost:4200`
-* Backend API em: `http://localhost:8080`
-
-### 3. Rodando Manualmente
-
-#### Backend:
-
-```bash
-cd backend
-# Configure suas variáveis no application.properties ou passe por ambiente:
-export SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/sonara
-export SPRING_DATASOURCE_USERNAME=postgres
-export SPRING_DATASOURCE_PASSWORD=postgres
-export JWT_SECRET=seuSecretSuperSeguroComMaisDe256BitsAqui12345
-
+# Encerrar os serviços
+docker compose down
+2. Execução Local com MavenCertifique-se de ter o PostgreSQL rodando localmente na porta configurada:Bash# Compilar e rodar a aplicação
 ./mvnw spring-boot:run
-
-```
-
-#### Frontend:
-
-```bash
-cd frontend
-npm install
-npm start
-# Aplicação disponível em http://localhost:4200
-
-```
-
----
-
-## 🗺️ Roadmap de Evolução
-
-* [x] Autenticação Stateless via JWT + BCrypt
-* [x] Catálogo Musical completo com CRUDs de Artistas, Álbuns e Faixas
-* [x] Interceptor Angular & AuthGuard de proteção de rotas
-* [x] Player persistente integrado ao catálogo
-* [x] Gestão de Favoritos e Playlists
-* [x] Deploy Contínuo (Vercel + Render)
-* [x] Pipeline de CI automatizada com GitHub Actions
-
----
-
-## 👤 Autor
-
-Desenvolvido por **Jaco Lima**
-
-* **GitHub:** [@benjaexz](https://www.google.com/url?sa=E&source=gmail&q=https://github.com/benjaexz)
+A API estará disponível em http://localhost:8080.📄 LicençaEste projeto está sob a licença MIT. Desenvolvido por Jacó Lima.
