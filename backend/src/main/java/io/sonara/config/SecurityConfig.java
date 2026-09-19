@@ -38,6 +38,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
+                                "/ping",
                                 "/auth/**",
                                 "/api/auth/**",
                                 "/swagger-ui/**",
