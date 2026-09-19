@@ -12,6 +12,8 @@ public class TrackRequestDTO {
 
     private Integer durationSeconds;
 
+    private String audioUrl;
+
     @NotNull(message = "Artist ID is required")
     private UUID artistId;
 
@@ -28,6 +30,10 @@ public class TrackRequestDTO {
 
     public Integer getDurationSeconds() {
         return durationSeconds;
+    }
+
+    public String getAudioUrl() {
+        return audioUrl;
     }
 
     public UUID getArtistId() {
@@ -48,6 +54,10 @@ public class TrackRequestDTO {
 
     public void setDurationSeconds(Integer durationSeconds) {
         this.durationSeconds = durationSeconds;
+    }
+
+    public void setAudioUrl(String audioUrl) {
+        this.audioUrl = audioUrl;
     }
 
     public void setArtistId(UUID artistId) {

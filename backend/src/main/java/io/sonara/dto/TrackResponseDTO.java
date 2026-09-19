@@ -7,6 +7,7 @@ public class TrackResponseDTO {
     private UUID id;
     private String title;
     private Integer durationSeconds;
+    private String audioUrl;
     private ArtistResponseDTO artist;
     private AlbumResponseDTO album;
     private GenreResponseDTO genre;
@@ -19,9 +20,22 @@ public class TrackResponseDTO {
             AlbumResponseDTO album,
             GenreResponseDTO genre
     ) {
+        this(id, title, durationSeconds, null, artist, album, genre);
+    }
+
+    public TrackResponseDTO(
+            UUID id,
+            String title,
+            Integer durationSeconds,
+            String audioUrl,
+            ArtistResponseDTO artist,
+            AlbumResponseDTO album,
+            GenreResponseDTO genre
+    ) {
         this.id = id;
         this.title = title;
         this.durationSeconds = durationSeconds;
+        this.audioUrl = audioUrl;
         this.artist = artist;
         this.album = album;
         this.genre = genre;
@@ -37,6 +51,10 @@ public class TrackResponseDTO {
 
     public Integer getDurationSeconds() {
         return durationSeconds;
+    }
+
+    public String getAudioUrl() {
+        return audioUrl;
     }
 
     public ArtistResponseDTO getArtist() {

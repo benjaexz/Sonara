@@ -66,6 +66,8 @@ public class TrackService {
                 genre
         );
 
+        track.setAudioUrl(dto.getAudioUrl());
+
         Track savedTrack = trackRepository.save(track);
 
         return toResponseDTO(savedTrack);
@@ -107,6 +109,7 @@ public class TrackService {
 
         track.setTitle(dto.getTitle());
         track.setDurationSeconds(dto.getDurationSeconds());
+        track.setAudioUrl(dto.getAudioUrl());
         track.setArtist(artist);
         track.setAlbum(album);
         track.setGenre(genre);
@@ -133,6 +136,7 @@ public class TrackService {
                 track.getId(),
                 track.getTitle(),
                 track.getDurationSeconds(),
+                track.getAudioUrl(),
                 toArtistResponseDTO(track.getArtist()),
                 toAlbumResponseDTO(track.getAlbum()),
                 toGenreResponseDTO(track.getGenre())

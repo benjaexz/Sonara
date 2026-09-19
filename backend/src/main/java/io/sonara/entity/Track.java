@@ -17,6 +17,9 @@ public class Track {
 
     private Integer durationSeconds;
 
+    @Column(length = 1000)
+    private String audioUrl;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "artist_id", nullable = false)
     private Artist artist;
@@ -52,6 +55,10 @@ public class Track {
         return durationSeconds;
     }
 
+    public String getAudioUrl() {
+        return audioUrl;
+    }
+
     public Artist getArtist() {
         return artist;
     }
@@ -74,6 +81,10 @@ public class Track {
 
     public void setDurationSeconds(Integer durationSeconds) {
         this.durationSeconds = durationSeconds;
+    }
+
+    public void setAudioUrl(String audioUrl) {
+        this.audioUrl = audioUrl;
     }
 
     public void setArtist(Artist artist) {
