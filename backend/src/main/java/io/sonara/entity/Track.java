@@ -20,6 +20,12 @@ public class Track {
     @Column(length = 1000)
     private String audioUrl;
 
+    @Column(length = 1000)
+    private String coverUrl;
+
+    @Column(unique = true)
+    private String externalId;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "artist_id", nullable = false)
     private Artist artist;
@@ -59,6 +65,14 @@ public class Track {
         return audioUrl;
     }
 
+    public String getCoverUrl() {
+        return coverUrl;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
     public Artist getArtist() {
         return artist;
     }
@@ -85,6 +99,14 @@ public class Track {
 
     public void setAudioUrl(String audioUrl) {
         this.audioUrl = audioUrl;
+    }
+
+    public void setCoverUrl(String coverUrl) {
+        this.coverUrl = coverUrl;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
     }
 
     public void setArtist(Artist artist) {

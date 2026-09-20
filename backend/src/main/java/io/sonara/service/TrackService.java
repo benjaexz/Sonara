@@ -137,6 +137,7 @@ public class TrackService {
                 track.getTitle(),
                 track.getDurationSeconds(),
                 track.getAudioUrl(),
+                track.getCoverUrl(),
                 toArtistResponseDTO(track.getArtist()),
                 toAlbumResponseDTO(track.getAlbum()),
                 toGenreResponseDTO(track.getGenre())
