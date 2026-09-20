@@ -28,8 +28,6 @@ export class Playlist {
 
     const token = localStorage.getItem('sonara_token');
 
-    console.log('TOKEN PLAYLIST:', token);
-
     return new HttpHeaders({
       Authorization: `Bearer ${token}`
     });
