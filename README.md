@@ -1,5 +1,5 @@
 # Sonara 🎵
-
+[![Sonara CI Pipeline](https://github.com/benjaexz/Sonara/actions/workflows/ci.yml/badge.svg)](https://github.com/benjaexz/Sonara/actions/workflows/ci.yml)
 O **Sonara** é uma plataforma completa de transmissão e gestão musical, desenvolvida com uma arquitetura desacoplada e profissional: um cliente web moderno em **Angular**, uma API robusta em **Java 21 / Spring Boot 3**, persistência relacional com **PostgreSQL**, suporte a execução via **Docker** e alojamento contínuo na nuvem.
 
 ---
