@@ -348,7 +348,7 @@ As faixas do catálogo vêm do [Jamendo](https://www.jamendo.com/) e pertencem a
 
 ## 👤 Autor
 
-Desenvolvido por **Jacó Lima**.
+Desenvolvido por **Jacó Lima Pimentel**.
 
 - **GitHub:** [@benjaexz](https://github.com/benjaexz)
 
