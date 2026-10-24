@@ -206,11 +206,13 @@ curl -X POST "https://sonara-backend-kh00.onrender.com/admin/import/jamendo" \
 
 ## 🧪 Testes Automatizados
 
-33 testes automatizados garantem a estabilidade da aplicação:
+33 testes automatizados cobrem playlists, favoritos, avaliações e a configuração de segurança:
 
 - **Serviço (unitários com Mockito):** regras de negócio, permissões de playlist e regras de avaliação.
 - **Web (integração com MockMvc):** códigos HTTP (200, 201, 204, 400, 401, 403, 404, 409), serialização JSON e tratamento de exceções.
 - **Segurança:** filtros JWT bloqueando acesso anônimo a rotas protegidas e liberando as públicas.
+
+**Ainda sem testes:** autenticação (login e registro), catálogo (artistas, álbuns e faixas), comentários, histórico e importador do Jamendo.
 
 Para rodar localmente:
 
@@ -218,6 +220,8 @@ Para rodar localmente:
 cd backend
 ./mvnw clean verify
 ```
+
+> O teste de contexto da aplicação precisa de um PostgreSQL local em `localhost:5432/sonara` (veja o `application.properties`). No CI, o pipeline sobe o banco automaticamente.
 
 ---
 
